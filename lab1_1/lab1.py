@@ -1,6 +1,6 @@
 import math
 import tkinter as tk
-import matplotlib.pyplot as plt
+import matplotlib.pyplot
 import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -74,13 +74,9 @@ def calculate ():
         outMin_lbl.configure(text=f"Минимум: {min(clonEntropyList):.3f}")
         outMax_lbl.configure(text=f"Максимум: {max(clonEntropyList):.3f}")
 
-        fig = Figure(figsize=(4,4), dpi = 100)
-    
-        plt = fig.add_subplot(111)
-        plt.grid()      # включение отображение сетки
+        plt.clear() # удаление предыдущего графика
         plt.plot(probList, entropyList)
 
-        canvas = FigureCanvasTkAgg(fig, master=frame3)
         canvas.draw()
 
         canvas.get_tk_widget().pack()
@@ -89,7 +85,7 @@ def calculate ():
 window = tk.Tk()
 
 # Создаем форму для заполнения
-frame1 = tk.Frame(master=window, bg="red", borderwidth=3)
+frame1 = tk.Frame(master=window, borderwidth=3)
 frame1.pack(fill=tk.X, side=tk.TOP)
 
 inN_lbl = tk.Label(master=frame1, text="Введите n:")
@@ -97,7 +93,7 @@ inN_lbl.pack(side=tk.LEFT)
 inN_ent = tk.Entry(master=frame1)
 inN_ent.pack(side=tk.LEFT)
 
-space_frm = tk.Frame(master=frame1, width= 20, bg="blue") # Разделитель
+space_frm = tk.Frame(master=frame1, width= 20) # Разделитель
 space_frm.pack(side=tk.LEFT)
 
 inP_lbl = tk.Label(master=frame1, text="Введите p:")
@@ -107,10 +103,10 @@ inP_ent.pack(side=tk.LEFT)
 
 # Создаем кнопку для вычисления значений
 enter_btn = tk.Button( master=window, text="Вычислить", command=calculate)
-enter_btn.pack(side=tk.TOP)
+enter_btn.pack(fill=tk.X, side=tk.TOP)
 
 # Создаем форму для вывода результата
-frame2 = tk.Frame(master=window, bg="green", borderwidth=3)
+frame2 = tk.Frame(master=window, borderwidth=3)
 frame2.pack(fill=tk.X, side=tk.TOP)
 
 outK_lbl = tk.Label(master=frame2, text="k = ...")
@@ -125,7 +121,13 @@ outMin_lbl = tk.Label(master=frame2, text="Минимум = ...")
 outMin_lbl.pack(side=tk.TOP)
 
 # Создаем форму для вывода графика
-frame3 = tk.Frame(master=window, height= 20, bg="yellow", borderwidth=3)
+frame3 = tk.Frame(master=window, height= 20, borderwidth=3)
 frame3.pack(fill=tk.X, side=tk.TOP)
+
+fig = Figure(figsize=(4,4), dpi = 100)
+plt = fig.add_subplot(111)
+plt.grid()      # включение отображение сетки
+
+canvas = FigureCanvasTkAgg(fig, master=frame3)
 
 window.mainloop()
